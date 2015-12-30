@@ -21,6 +21,10 @@ page '/*.txt', layout: false
 # Reload the browser automatically whenever files change
 configure :development do
   activate :livereload
+  set :sass, {
+    :style => :nested
+  }
+  set :sass_assets_paths, []
 end
 
 ###
@@ -36,11 +40,15 @@ end
 
 # Build-specific configuration
 configure :build do
-  # Minify CSS on build
-  # activate :minify_css
+  set :https, true
+  set :sass, {
+    :style => :compressed
+  }
+  set :sass_assets_paths, []
 
-  # Minify Javascript on build
-  # activate :minify_javascript
+  activate :minify_javascript
+  activate :minify_html, :remove_quotes => false, :remove_intertag_spaces => true
+  activate :gzip
 end
 
 activate :deploy do |deploy|
